@@ -3,7 +3,7 @@
   "name": "Хохма",
   "statName": "Мудрость",
   "statKey": "wis",
-  "isWIP": true,
+  "isWIP": false,
   "levels": [
     {"lvl": 0,"bonus": 0,"free": ["mnemonic"]},
     {"lvl": 1,"bonus": 1,"unlocks": ["unknown", "noumenal"]},
