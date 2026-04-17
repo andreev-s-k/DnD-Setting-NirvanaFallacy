@@ -11,11 +11,32 @@
     --tier0: #22c55e; --tier1: #3b82f6; --tier2: #a855f7; --tier3: #f97316; --tier4: #ef4444; --tierLocked: #4a4d58;
     --radius: 6px;
   }
+  [data-theme="light"] {
+    --bg: #f4f5f7; --surface: #ffffff; --surface2: #eef0f3; --border: #d1d5db;
+    --text: #111827; --text2: #6b7280; --accent: #5b61b3;
+    --tier0: #16a34a; --tier1: #2563eb; --tier2: #9333ea; --tier3: #ea580c; --tier4: #dc2626; --tierLocked: #9ca3af;
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; transition: background 0.2s, color 0.2s; }
   .container { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; }
-  h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 20px; color: var(--text); }
+  
+  /* Header area */
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  h1 { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.02em; }
   h1 span { color: var(--accent); }
+  
+  .theme-toggle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .theme-toggle:hover { background: var(--surface2); }
+  .theme-toggle svg { width: 20px; height: 20px; fill: currentColor; }
 
   .header { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
   .input-group { display: flex; flex-direction: column; gap: 4px; }
@@ -44,7 +65,11 @@
   .tab:hover { background: var(--surface2); }
   .tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
   .tab.wip { opacity: 0.6; }
-  .loading-msg { color: var(--text2); font-size: 0.8rem; margin-left: 10px; }
+  
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text2); border: 2px dashed var(--border); border-radius: var(--radius); margin-bottom: 20px; }
+  .empty-state h2 { margin-bottom: 8px; font-size: 1.1rem; }
+  .empty-state p { font-size: 0.85rem; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+  .empty-state code { display: inline-block; background: var(--surface2); padding: 2px 6px; border-radius: 4px; margin: 12px 0; font-size: 0.8rem; color: var(--accent); }
 
   .sort-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
   .sort-bar .sort-label { font-size: 0.75rem; color: var(--text2); margin-right: 4px; }
@@ -56,7 +81,7 @@
   .progress-track { height: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.3s ease; }
   .progress-marks { display: flex; justify-content: space-between; margin-top: 4px; padding: 0 2px; }
-  .progress-marks span { font-size: 0.7rem; color: var(--text2); width: 0; text-align: center; position: relative; }
+  .progress-marks span { font-size: 0.7rem; color: var(--text2); width: 0; text-align: center; position: relative; font-weight: 500; }
   .progress-marks span::before { content: ''; position: absolute; top: -8px; left: 50%; width: 1px; height: 4px; background: var(--border); }
   .progress-marks span.reached { color: var(--accent); }
 
@@ -64,10 +89,11 @@
   .stat-info { font-size: 0.8rem; color: var(--text2); }
   .stat-info b { color: var(--text); }
 
+  /* Skills Grid */
   .skills-grid { column-count: 2; column-gap: 12px; }
   @media (max-width: 700px) { .skills-grid { column-count: 1; } }
 
-  .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; break-inside: avoid; display: inline-flex; width: 100%; flex-direction: column; transition: border-color 0.15s; }
+  .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; break-inside: avoid; display: inline-flex; width: 100%; flex-direction: column; transition: border-color 0.15s, background 0.2s; }
   .skill-card.locked { opacity: 0.35; }
   .skill-card.tier0 { border-left: 3px solid var(--tier0); }
   .skill-card.tier1 { border-left: 3px solid var(--tier1); }
@@ -77,20 +103,46 @@
   .skill-card.free-skill { border-left: 3px solid var(--text2); }
   .skill-card.wip-card { border-left: 3px solid var(--tier3); }
 
-  .skill-header-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; cursor: pointer; user-select: none; }
+  .skill-header-row { display: flex; align-items: flex-start; padding: 12px 14px; cursor: pointer; user-select: none; gap: 8px; }
   .skill-header-row:hover { background: var(--surface2); }
-  .skill-name { font-weight: 600; font-size: 0.9rem; }
-  .tier-badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; flex-shrink: 0; margin-left: 8px; }
+  
+  /* Large Skill Number */
+  .skill-number {
+    font-size: 2.4rem;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--text2);
+    opacity: 0.35;
+    flex-shrink: 0;
+    width: 32px;
+    text-align: center;
+    padding-top: 2px;
+    transition: opacity 0.15s, color 0.15s;
+  }
+  .skill-card:not(.locked):hover .skill-number,
+  .skill-card.expanded .skill-number {
+    opacity: 0.7;
+    color: var(--accent);
+  }
+  .skill-card.tier0 .skill-number { color: var(--tier0); opacity: 0.6; }
+  .skill-card.tier1 .skill-number { color: var(--tier1); opacity: 0.6; }
+  .skill-card.tier2 .skill-number { color: var(--tier2); opacity: 0.6; }
+  .skill-card.tier3 .skill-number { color: var(--tier3); opacity: 0.6; }
+  .skill-card.tier4 .skill-number { color: var(--tier4); opacity: 0.6; }
+  
+  .skill-title-area { flex-grow: 1; }
+  .skill-name { font-weight: 600; font-size: 0.9rem; line-height: 1.3; }
+  .tier-badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
   .tier-badge.t0 { background: rgba(34,197,94,0.15); color: var(--tier0); }
   .tier-badge.t1 { background: rgba(59,130,246,0.15); color: var(--tier1); }
   .tier-badge.t2 { background: rgba(168,85,247,0.15); color: var(--tier2); }
   .tier-badge.t3 { background: rgba(249,115,22,0.15); color: var(--tier3); }
   .tier-badge.t4 { background: rgba(239,68,68,0.15); color: var(--tier4); }
-  .tier-badge.free { background: rgba(255,255,255,0.08); color: #aaa; }
+  .tier-badge.free { background: rgba(255,255,255,0.08); color: var(--text2); }
   .tier-badge.wip { background: rgba(249,115,22,0.1); color: var(--tier3); }
   .tier-badge.locked { background: rgba(255,255,255,0.05); color: var(--tierLocked); }
 
-  .skill-detail { padding: 0 14px 12px; display: none; }
+  .skill-detail { padding: 0 14px 12px 54px; display: none; }
   .skill-detail.open { display: block; }
 
   .skill-action-type { font-size: 0.75rem; color: var(--accent); margin-bottom: 6px; font-style: italic; }
@@ -108,15 +160,24 @@
   .tier-dot.t3.unlocked { border-color: var(--tier3); background: rgba(249,115,22,0.2); }
   .tier-dot.t4.unlocked { border-color: var(--tier4); background: rgba(239,68,68,0.2); }
 
-  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface2); border: 1px solid var(--border); padding: 10px 20px; border-radius: var(--radius); font-size: 0.85rem; transition: transform 0.25s ease; z-index: 100; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface); border: 1px solid var(--border); padding: 10px 20px; border-radius: var(--radius); font-size: 0.85rem; transition: transform 0.25s ease; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  @media (max-width: 600px) { .header { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { 
+    .header { grid-template-columns: 1fr; } 
+    .skill-number { font-size: 2rem; width: 26px; }
+    .skill-detail { padding-left: 40px; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1><span>N</span> Nirvana Branch Calculator</h1>
+  <div class="top-bar">
+    <h1><span>N</span> Nirvana Branch Calculator</h1>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Переключить тему">
+      <svg id="themeIcon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
+    </button>
+  </div>
 
   <div class="header">
     <div class="input-group">
@@ -133,37 +194,35 @@
     </div>
   </div>
 
-  <div class="tabs" id="tabs">
-    <span class="loading-msg" id="loadStatus">Загрузка ветвей...</span>
-  </div>
+  <div class="tabs" id="tabs"></div>
 
   <div class="points-bar">
     <div class="pts">Очки: <span id="availablePts">0</span> / <span id="maxPts">0</span></div>
     <div class="actions">
-      <button class="btn" onclick="saveJSON()">Сохранить JSON</button>
+      <button class="btn" onclick="saveJSON()">Сохранить билд</button>
       <button class="btn" onclick="document.getElementById('buildFileInput').click()">Загрузить билд</button>
       <input type="file" id="buildFileInput" accept=".json" onchange="loadJSON(event)" style="display:none">
       <button class="btn" onclick="exportText()">Копировать текст</button>
     </div>
   </div>
 
-  <div class="progress-section">
+  <div class="progress-section" id="progressSection" style="display:none">
     <div class="progress-label">
       <span>Уровень ветки</span>
-      <span id="branchLevelDisplay">0 / 10</span>
+      <span id="branchLevelDisplay">0 / X</span>
     </div>
     <div class="progress-track">
       <div class="progress-fill" id="progressFill" style="width:0%"></div>
     </div>
     <div class="progress-marks" id="progressMarks"></div>
     <div class="upgrade-branch">
-      <button class="btn btn-primary" id="upgradeBranchBtn">+1 к ветке</button>
-      <button class="btn btn-warn" id="downgradeBranchBtn">-1 к ветке</button>
+      <button class="btn btn-primary" id="upgradeBranchBtn">+</button>
+      <button class="btn btn-warn" id="downgradeBranchBtn">-</button>
       <div class="stat-info" id="statInfo"></div>
     </div>
   </div>
 
-  <div class="sort-bar" id="sortBar"></div>
+  <div class="sort-bar" id="sortBar" style="display:none"></div>
   <div class="skills-grid" id="skillsGrid"></div>
 </div>
 
@@ -173,44 +232,10 @@
 var TIERS = ['Корень','Опытный','Мастер','Титан','Полубог'];
 var TIER_CLASSES = ['t0','t1','t2','t3','t4'];
 var TIER_CARD_CLASSES = ['tier0','tier1','tier2','tier3','tier4'];
-
-var DEFAULT_BRANCHES = {
-  hesed: { id:'hesed', name:'Хесед', statName:'Телосложение', statKey:'con', isWIP:false, levels:[
-      {lvl:0, bonus:0, free:['lazarev']},{lvl:1, bonus:1, unlocks:['decoherence','transfer_life']},{lvl:2, bonus:1, tierUnlock:1},
-      {lvl:3, bonus:1, unlocks:['quantum']},{lvl:4, bonus:1, tierUnlock:2},{lvl:5, bonus:1, unlocks:['observer','schrodinger']},
-      {lvl:6, bonus:1, tierUnlock:3},{lvl:7, bonus:1, unlocks:['anchor']},{lvl:8, bonus:1, tierUnlock:4},
-      {lvl:9, bonus:2, reqStat:20, extraReaction:true, free:['regen']},{lvl:10, bonus:2, reqStat:20, unlocks:['superposition']}
-    ], skills:[
-      {id:'lazarev', name:'Протокол "Лазарь"', freeLvl:0, action:'Автоматически при смерти, 1 ур. Истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'decoherence', name:'Декогеренция', unlockLvl:1, action:'Пассивно', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'transfer_life', name:'Перенос Жизни', unlockLvl:1, action:'Действие, 1 ур. Истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'quantum', name:'Квантовая Механика', unlockLvl:3, action:'Пассивно', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'observer', name:'Эффект Наблюдателя', unlockLvl:5, action:'Реакция', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'schrodinger', name:'Кот Шрёдингера', unlockLvl:5, action:'Действие + Бонусное + Реакция, 3 ур. Истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'anchor', name:'Якорь Жизни', unlockLvl:7, action:'Пассивно', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'regen', name:'Регенерация Нулевой Точки', freeLvl:9, action:'Бонусное / Пассивно', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'superposition', name:'Суперпозиция', unlockLvl:10, action:'Действие, 1 ур. истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']}
-    ]},
-  nahema: { id:'nahema', name:'Нахема', statName:'Интеллект', statKey:'int', isWIP:false, levels:[
-      {lvl:0, bonus:0, free:['navigator']},{lvl:1, bonus:1, unlocks:['scan','markov']},{lvl:2, bonus:1, tierUnlock:1},
-      {lvl:3, bonus:1, unlocks:['weaver']},{lvl:4, bonus:1, tierUnlock:2},{lvl:5, bonus:1, unlocks:['stochastic','attractors']},
-      {lvl:6, bonus:1, tierUnlock:3},{lvl:7, bonus:1, unlocks:['laplace']},{lvl:8, bonus:1, tierUnlock:4},
-      {lvl:9, bonus:2, reqStat:20, extraReaction:true, free:['overclock']},{lvl:10, bonus:2, reqStat:20, unlocks:['collapse']}
-    ], skills:[
-      {id:'navigator', name:'Навигатор Хаоса', freeLvl:0, action:'Бонусное + Реакция', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'scan', name:'Сканирование Среды', unlockLvl:1, action:'Действие / Бонусное', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'markov', name:'Цепи Маркова', unlockLvl:1, action:'Пассивно', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'weaver', name:'Ткач Причинных Графов', unlockLvl:3, action:'Реакция, 1 ур. Истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'stochastic', name:'Стохастический Симулятор', unlockLvl:5, action:'Свободное / 1 раз в неделю', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'attractors', name:'Теория Аттракторов', unlockLvl:5, action:'Действие, 1 ур. Истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'laplace', name:'Демон Лапласа', unlockLvl:7, action:'Действие+Бонус+Реакция, 3 ур. Истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'overclock', name:'Разгон Сознания', freeLvl:9, action:'Пассивно', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']},
-      {id:'collapse', name:'Коллапс Волновой Функции', unlockLvl:10, action:'Действие, 1 ур. Истощения', tiers:['Текст 1','Текст 2','Текст 3','Текст 4','Текст 5']}
-    ]},
-};
+var ROMAN = ['0','I','II','III','IV','V','VI','VII','VIII','IX','X'];
 
 var BRANCHES = {};
-var state = { branch: 'hesed', playerLevel: 1, baseStat: 10, branchLevel: 0, skills: {}, expandedCards: {}, sortMode: 'unlock', sortInvert: false, useServerData: false };
+var state = { branch: null, playerLevel: 1, baseStat: 10, branchLevel: 0, skills: {}, expandedCards: {}, sortMode: 'unlock', sortInvert: false, useServerData: false };
 
 function initState() {
   var branch = BRANCHES[state.branch];
@@ -227,20 +252,22 @@ function validateBranchData(data) {
 }
 
 async function loadBranchesAuto() {
-  document.getElementById('loadStatus').textContent = 'Проверка папки branches...';
+  var tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '<span style="color:var(--text2);font-size:0.85rem;">Загрузка ветвей...</span>';
   try {
-    const res = await fetch('branches/manifest.json');
+    var res = await fetch('branches/manifest.json');
     if (!res.ok) throw new Error('Manifest not found');
-    const manifest = await res.json();
+    var manifest = await res.json();
     if (!manifest.files || !Array.isArray(manifest.files)) throw new Error('Invalid manifest');
 
-    let loadedCount = 0;
-    const newBranches = {};
-    for (const filename of manifest.files) {
+    var loadedCount = 0;
+    var newBranches = {};
+    for (var f = 0; f < manifest.files.length; f++) {
+      var filename = manifest.files[f];
       try {
-        const branchRes = await fetch('branches/' + filename);
+        var branchRes = await fetch('branches/' + filename);
         if (!branchRes.ok) continue;
-        const data = await branchRes.json();
+        var data = await branchRes.json();
         if (validateBranchData(data)) {
           newBranches[data.id] = data;
           loadedCount++;
@@ -252,19 +279,24 @@ async function loadBranchesAuto() {
       BRANCHES = newBranches;
       state.branch = Object.keys(newBranches)[0];
       state.useServerData = true;
-      showToast(`Загружено ${loadedCount} ветвей с сервера`);
+      showToast('Загружено ' + loadedCount + ' ветвей');
     } else {
       throw new Error('No valid branches in manifest');
     }
   } catch (err) {
-    console.warn('Falling back to embedded data:', err.message);
-    BRANCHES = JSON.parse(JSON.stringify(DEFAULT_BRANCHES));
-    state.branch = 'hesed';
+    console.warn('Fallback: No branch data available', err.message);
+    BRANCHES = {};
+    state.branch = null;
     state.useServerData = false;
   }
-  document.getElementById('loadStatus').style.display = 'none';
+  document.getElementById('loadStatus') && (document.getElementById('loadStatus').style.display = 'none');
   initState();
   render();
+}
+
+function toRoman(num) {
+  if (num >= 0 && num < ROMAN.length) return ROMAN[num];
+  return num.toString();
 }
 
 function getMaxPoints() { return Math.min(state.playerLevel, 20); }
@@ -284,12 +316,13 @@ function calcEffectiveStat(branchKey, branchLvl) {
 
 function isSkillFree(skillId) {
   var branch = BRANCHES[state.branch];
-  return branch && branch.skills.some(x => x.id === skillId && x.freeLvl !== undefined);
+  return branch && branch.skills.some(function(x){ return x.id === skillId && x.freeLvl !== undefined; });
 }
 
 function getSpentPoints() {
   var spent = state.branchLevel;
-  Object.keys(state.skills).forEach(function(sid) {
+  var keys = Object.keys(state.skills);
+  keys.forEach(function(sid) {
     var s = state.skills[sid];
     if (s.tier < 0) return;
     var cost = 1 + s.tier;
@@ -364,6 +397,7 @@ function getSortedSkills() {
 
 function renderSortBar() {
   var bar = document.getElementById('sortBar');
+  bar.style.display = '';
   bar.innerHTML = '<span class="sort-label">Сортировка:</span>' +
     '<button class="btn btn-sm btn-sort ' + (state.sortMode==='unlock'&&!state.sortInvert?'active':'') + '" onclick="setSort(\'unlock\',false)">По открытию</button>' +
     '<button class="btn btn-sm btn-sort ' + (state.sortMode==='unlock'&&state.sortInvert?'active':'') + '" onclick="setSort(\'unlock\',true)">Инверт</button>' +
@@ -377,11 +411,25 @@ function render() {
   var branch = BRANCHES[state.branch];
   var tabsEl = document.getElementById('tabs');
   tabsEl.innerHTML = '';
-  if (!branch) {
-    tabsEl.innerHTML = '<div class="loading-msg">Нет загруженных ветвей.</div>';
+  var progSection = document.getElementById('progressSection');
+  
+  if (!branch || Object.keys(BRANCHES).length === 0) {
+    tabsEl.innerHTML = '';
+    progSection.style.display = 'none';
+    document.getElementById('sortBar').style.display = 'none';
+    document.getElementById('availablePts').textContent = '0';
+    document.getElementById('maxPts').textContent = '0';
+    
+    var grid = document.getElementById('skillsGrid');
+    grid.innerHTML = '<div class="empty-state">' +
+      '<h2>Ветви не загружены</h2>' +
+      '</div>';
     return;
   }
-  Object.keys(BRANCHES).forEach(function(key) {
+
+  // Render Tabs
+  var branchKeys = Object.keys(BRANCHES);
+  branchKeys.forEach(function(key) {
     var b = BRANCHES[key];
     var tab = document.createElement('div');
     tab.className = 'tab' + (key === state.branch ? ' active' : '') + (b.isWIP ? ' wip' : '');
@@ -390,18 +438,23 @@ function render() {
     tabsEl.appendChild(tab);
   });
 
+  // Points
   var maxP = getMaxPoints(), spent = getSpentPoints();
   document.getElementById('availablePts').textContent = Math.max(0, maxP - spent);
   document.getElementById('maxPts').textContent = maxP;
   document.getElementById('playerLevel').value = state.playerLevel;
   document.getElementById('baseStat').value = state.baseStat;
 
+  progSection.style.display = '';
+
+  // Progress with Roman Numerals
   var fill = document.getElementById('progressFill');
   fill.style.width = (state.branchLevel / 10 * 100) + '%';
-  document.getElementById('branchLevelDisplay').textContent = state.branchLevel + ' / 10';
+  document.getElementById('branchLevelDisplay').textContent = toRoman(state.branchLevel) + ' / X';
   var marks = document.getElementById('progressMarks'); marks.innerHTML = '';
   for (var i = 0; i <= 10; i++) {
-    var span = document.createElement('span'); span.textContent = i;
+    var span = document.createElement('span'); 
+    span.textContent = toRoman(i);
     if (i <= state.branchLevel) span.classList.add('reached');
     marks.appendChild(span);
   }
@@ -412,12 +465,17 @@ function render() {
   document.getElementById('statInfo').innerHTML = branch.statName + ': <b>' + state.baseStat + '</b> -> <b>' + calcEffectiveStat(state.branch, state.branchLevel) + '</b>';
 
   renderSortBar();
+  var sortedSkills = getSortedSkills();
   var grid = document.getElementById('skillsGrid'); grid.innerHTML = '';
-  getSortedSkills().forEach(function(skill) {
+  
+  sortedSkills.forEach(function(skill, index) {
     var s = state.skills[skill.id];
+    var skillNum = index + 1;
+
     if (skill.wip) {
       var cardWip = document.createElement('div'); cardWip.className = 'skill-card wip-card';
-      cardWip.innerHTML = '<div class="skill-header-row" onclick="toggleCard(\''+skill.id+'\')"><div class="skill-name">'+escapeHtml(skill.name)+'</div><div class="tier-badge wip">в разработке</div></div><div class="skill-detail '+(state.expandedCards[skill.id]?'open':'')+'"><div class="skill-desc">'+escapeHtml(skill.tiers[0]||'Нет описания')+'</div><div class="skill-wip-msg">Данные скоро появятся</div></div>';
+      var isWipExpanded = state.expandedCards[skill.id] === true;
+      cardWip.innerHTML = '<div class="skill-header-row" onclick="toggleCard(\''+skill.id+'\')"><div class="skill-number">'+skillNum+'</div><div class="skill-title-area"><div class="skill-name">'+escapeHtml(skill.name)+'</div></div><div class="tier-badge wip">в разработке</div></div><div class="skill-detail '+(isWipExpanded?'open':'')+'"><div class="skill-desc">'+escapeHtml(skill.tiers[0]||'Нет описания')+'</div><div class="skill-wip-msg">Данные скоро появятся</div></div>';
       grid.appendChild(cardWip); return;
     }
 
@@ -426,6 +484,7 @@ function render() {
 
     var card = document.createElement('div'); card.className = 'skill-card';
     var isLocked = !s.unlocked && !available;
+    if (state.expandedCards[skill.id] === true) card.classList.add('expanded');
     if (isLocked) card.classList.add('locked');
     else if (s.unlocked && s.tier >= 0) card.classList.add(TIER_CARD_CLASSES[s.tier]);
     else if (skill.freeLvl !== undefined) card.classList.add('free-skill');
@@ -436,11 +495,15 @@ function render() {
     else if (skill.freeLvl !== undefined) badgeHTML = '<div class="tier-badge free">Дар ветки</div>';
 
     var isExpanded = state.expandedCards[skill.id] === true;
-    var headerHTML = '<div class="skill-header-row" onclick="toggleCard(\''+skill.id+'\')"><div class="skill-name">'+escapeHtml(skill.name)+'</div>'+badgeHTML+'</div>';
+    var headerHTML = '<div class="skill-header-row" onclick="toggleCard(\''+skill.id+'\')">' +
+      '<div class="skill-number">'+skillNum+'</div>' +
+      '<div class="skill-title-area"><div class="skill-name">'+escapeHtml(skill.name)+'</div></div>' +
+      badgeHTML + '</div>';
+      
     var detailHTML = '<div class="skill-detail '+(isExpanded?'open':'')+'">';
 
     if (isLocked) {
-      detailHTML += '<div class="skill-lock-msg">Требуется уровень ветки '+ulvl+'</div>';
+      detailHTML += '<div class="skill-lock-msg">Требуется уровень ветки ' + toRoman(ulvl) + '</div>';
     } else {
       var desc = s.unlocked && s.tier >= 0 ? skill.tiers[s.tier] : skill.tiers[0];
       detailHTML += (skill.action ? '<div class="skill-action-type">'+skill.action+'</div>' : '');
@@ -455,7 +518,7 @@ function render() {
         if (unlockCheck && unlockCheck.ok) {
           actionsBarHTML += unlockCheck.cost===0 ? '<button class="btn btn-primary btn-sm" onclick="unlockSkill(\''+skill.id+'\')">Открыть (бесплатно)</button>' : '<button class="btn btn-primary btn-sm" onclick="unlockSkill(\''+skill.id+'\')">Открыть: '+unlockCheck.cost+' очк.</button>';
         } else {
-          actionsBarHTML += '<span class="skill-lock-msg">Требуется уровень ветки '+ulvl+(unlockCheck&&unlockCheck.reason?' - '+unlockCheck.reason:'')+'</span>';
+          actionsBarHTML += '<span class="skill-lock-msg">Требуется уровень ветки '+toRoman(ulvl)+(unlockCheck&&unlockCheck.reason?' - '+unlockCheck.reason:'')+'</span>';
         }
       } else {
         var upCheck = canUpgradeTier(skill.id);
@@ -475,6 +538,7 @@ function render() {
 }
 
 function escapeHtml(text) { return text ? text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>') : ''; }
+
 function switchBranch(key) { state.branch = key; initState(); render(); }
 function upgradeBranch() { var c=canUpgradeBranch(); if(!c.ok){showToast(c.reason);return;} state.branchLevel++; render(); }
 function downgradeBranch() { if(state.branchLevel<=0)return; state.branchLevel--; var branch=BRANCHES[state.branch]; branch.skills.forEach(function(sk){var s=state.skills[sk.id]; if(s.unlocked&&state.branchLevel<getUnlockLvlForSkill(sk.id)){s.unlocked=false;s.tier=-1;}}); render(); }
@@ -488,6 +552,24 @@ function resetAll() { state.branchLevel=0; initState(); render(); showToast('С�
 document.getElementById('playerLevel').addEventListener('input', function(e) { var v=parseInt(e.target.value); state.playerLevel=isNaN(v)||v<1?1:(v>20?20:v); render(); });
 document.getElementById('baseStat').addEventListener('input', function(e) { var v=parseInt(e.target.value); state.baseStat=isNaN(v)||v<1?1:(v>30?30:v); render(); });
 
+// Theme Toggle
+function toggleTheme() {
+  var html = document.documentElement;
+  var current = html.getAttribute('data-theme');
+  var next = current === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', next === 'dark' ? '' : 'light');
+  if (next === 'dark') html.removeAttribute('data-theme');
+  
+  var icon = document.getElementById('themeIcon');
+  if (next === 'light') {
+    // Sun icon
+    icon.innerHTML = '<path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-3a1 1 0 0 0 1-1V1a1 1 0 0 0-2 0v2a1 1 0 0 0 1 1zm0 18a1 1 0 0 0-1 1v2a1 1 0 0 0 2 0v-2a1 1 0 0 0-1-1zM4.22 5.64l-1.42-1.42a1 1 0 0 0-1.41 1.42l1.41 1.41a1 1 0 0 0 1.42-1.41zM19.78 18.36l1.42 1.42a1 1 0 0 0 1.41-1.42l-1.41-1.41a1 1 0 0 0-1.42 1.41zM1 12a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2H1zm20 0a1 1 0 0 0 0 2h2a1 1 0 0 0 0-2h-2zM4.22 18.36a1 1 0 0 0-1.42 1.42l1.42 1.41a1 1 0 0 0 1.41-1.41l-1.41-1.42zM18.36 4.22a1 1 0 0 0 1.42-1.42l-1.42-1.41a1 1 0 0 0-1.41 1.41l1.41 1.42z"/>';
+  } else {
+    // Moon icon
+    icon.innerHTML = '<path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/>';
+  }
+}
+
 function saveJSON() {
   var data={meta:{version:'1.0',branch:state.branch,exportedAt:new Date().toISOString()},player:{level:state.playerLevel,baseStat:state.baseStat},progress:{branchLevel:state.branchLevel,spentPoints:getSpentPoints(),maxPoints:getMaxPoints()},skills:state.skills,expanded:state.expandedCards,sortMode:state.sortMode,sortInvert:state.sortInvert};
   var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}), url=URL.createObjectURL(blob), a=document.createElement('a'); a.href=url; a.download='nirvana_'+state.branch+'_'+state.playerLevel+'.json'; a.click(); URL.revokeObjectURL(url); showToast('Сохранено');
@@ -497,7 +579,7 @@ function loadJSON(e) {
   var file=e.target.files[0]; if(!file)return;
   var reader=new FileReader(); reader.onload=function(ev){
     try {
-      var data=JSON.parse(ev.target.result); if(!data.meta||!data.meta.branch||!BRANCHES[data.meta.branch]){showToast('Неверный формат');return;}
+      var data=JSON.parse(ev.target.result); if(!data.meta||!data.meta.branch||!BRANCHES[data.meta.branch]){showToast('Неверный формат или ветвь не загружена');return;}
       state.branch=data.meta.branch; state.playerLevel=data.player.level||1; state.baseStat=data.player.baseStat||10; state.branchLevel=data.progress.branchLevel||0; state.skills=data.skills||{}; state.expandedCards=data.expanded||{}; state.sortMode=data.sortMode||'unlock'; state.sortInvert=data.sortInvert||false;
       var branch=BRANCHES[state.branch]; if(branch) branch.skills.forEach(function(sk){if(!state.skills[sk.id])state.skills[sk.id]={unlocked:false,tier:-1,isFree:sk.freeLvl!==undefined};});
       render(); showToast('Загружено');
@@ -507,15 +589,16 @@ function loadJSON(e) {
 
 function exportText() {
   var branch=BRANCHES[state.branch]; if(!branch)return;
-  var text='ВЕТВЬ: '+branch.name.toUpperCase()+'\nУровень: '+state.playerLevel+'\nБазовая '+branch.statName+': '+state.baseStat+'\nУровень ветки: '+state.branchLevel+'/10\nЭффективная: '+calcEffectiveStat(state.branch,state.branchLevel)+'\nОчки: '+(getMaxPoints()-getSpentPoints())+'/'+getMaxPoints()+'\n\nНАВЫКИ:\n'+'-'.repeat(40)+'\n';
+  var text='ВЕТВЬ: '+branch.name.toUpperCase()+'\nУровень: '+state.playerLevel+'\nБазовая '+branch.statName+': '+state.baseStat+'\nУровень ветки: '+toRoman(state.branchLevel)+'/X\nЭффективная: '+calcEffectiveStat(state.branch,state.branchLevel)+'\nОчки: '+(getMaxPoints()-getSpentPoints())+'/'+getMaxPoints()+'\n\nНАВЫКИ:\n'+'-'.repeat(40)+'\n';
   branch.skills.forEach(function(skill){if(skill.wip)return; var s=state.skills[skill.id]; text+='\n'+skill.name+'\n'+(s.unlocked&&s.tier>=0?'  Ранг: '+TIERS[s.tier]+'\n  '+skill.tiers[s.tier].replace(/\n/g,'\n  ')+'\n':'  Не изучен\n')+(skill.action?'  ['+skill.action+']\n':'')+'-'.repeat(40)+'\n';});
   navigator.clipboard.writeText(text).then(function(){showToast('Скопировано');}).catch(function(){showToast('Не удалось');});
 }
 
 function showToast(msg) { var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2000); }
 
-// Инициализация
+// Initialize
 loadBranchesAuto();
 </script>
 </body>
 </html>
+
