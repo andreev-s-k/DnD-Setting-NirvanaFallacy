@@ -299,7 +299,7 @@ function toRoman(num) {
   return num.toString();
 }
 
-function getMaxPoints() { return Math.min(state.playerLevel, 20); }
+function getMaxPoints() { return Math.min(state.playerLevel, 999); }
 
 function calcEffectiveStat(branchKey, branchLvl) {
   var total = state.baseStat;
@@ -549,7 +549,7 @@ function sellSkill(id) { var s=state.skills[id]; if(!s.unlocked)return; s.unlock
 function toggleCard(id) { state.expandedCards[id]=!state.expandedCards[id]; render(); }
 function resetAll() { state.branchLevel=0; initState(); render(); showToast('Сброшено'); }
 
-document.getElementById('playerLevel').addEventListener('input', function(e) { var v=parseInt(e.target.value); state.playerLevel=isNaN(v)||v<1?1:(v>20?20:v); render(); });
+document.getElementById('playerLevel').addEventListener('input', function(e) { var v=parseInt(e.target.value); state.playerLevel=isNaN(v)||v<1?1:(v>999?999:v); render(); });
 document.getElementById('baseStat').addEventListener('input', function(e) { var v=parseInt(e.target.value); state.baseStat=isNaN(v)||v<1?1:(v>30?30:v); render(); });
 
 // Theme Toggle
