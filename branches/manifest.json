@@ -1,3 +1,25 @@
 {
-  "files": ["hesed.json", "nahema.json", "chokmah.json"]
+  "files": [
+    "Keter.json",
+    "chokmah.json",
+    "binah.json",
+    "hesed.json",
+    "gevurah.json",
+    "tiphareth.json",
+    "netzach.json",
+    "hod.json",
+    "yesod.json",
+    "malkuth.json",
+    "thaumiel.json",
+    "ghagiel.json",
+    "satarieL.json",
+    "golachab.json",
+    "nahema.json",
+    "thagirion.json",
+    "asmodeus.json",
+    "lilith.json",
+    "baphomet.json",
+    "samael.json",
+    "daat.json"
+  ]
 }

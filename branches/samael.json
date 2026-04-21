@@ -1,0 +1,152 @@
+{
+  "id": "temp",
+  "name": "-",
+  "statName": "-",
+  "statKey": "-",
+  "isWIP": true,
+  "levels": [
+    {"lvl": 0,"bonus": 0,"free": ["-"]},
+    {"lvl": 1,"bonus": 1,"unlocks": ["-", "-"]},
+    {"lvl": 2,"bonus": 1,"tierUnlock": 1},
+    {"lvl": 3,"bonus": 1,"unlocks": ["-"]},
+    {"lvl": 4,"bonus": 1,"tierUnlock": 2},
+    {"lvl": 5,"bonus": 1, "unlocks": ["-", "-"]},
+    {"lvl": 6, "bonus": 1,"tierUnlock": 3 },
+    {"lvl": 7,"bonus": 1,"unlocks": ["-"]},
+    {"lvl": 8,"bonus": 1, "tierUnlock": 4 },
+    {"lvl": 9,"bonus": 2, "reqStat": 20, "extraReaction": true, "free": ["-"]},
+    {"lvl": 10,"bonus": 2,"reqStat": 20,"unlocks": ["-"]}
+  ],
+  "skills": [
+    {
+      "id": "-",
+      "name": "-",
+      "freeLvl": 0,
+      "action": "-",
+      "tiers": [
+        "-",
+        
+        "-",
+        
+        "-",
+        
+        "-",
+        
+        "-"
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "unlockLvl": 1,
+      "action": "-",
+      "tiers": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "unlockLvl": 1,
+      "action": "-",
+      "tiers": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "unlockLvl": 3,
+      "action": "-",
+      "tiers": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "unlockLvl": 5,
+      "action": "-",
+      "tiers": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "unlockLvl": 5,
+      "action": "-",
+      "tiers": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "unlockLvl": 7,
+      "action": "-",
+      "tiers": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "freeLvl": 9,
+      "action": "-",
+      "tiers": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "wip": true
+    },
+    {
+      "id": "-",
+      "name": "-",
+      "unlockLvl": 10,
+      "action": "-",
+      "tiers": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "wip": true
+    }
+  ]
+}
