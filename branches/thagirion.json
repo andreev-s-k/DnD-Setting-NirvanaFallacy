@@ -1,8 +1,8 @@
 {
   "id": "thagirion",
   "name": "Тагирион",
-  "statName": "-",
-  "statKey": "-",
+  "statName": "Харизма",
+  "statKey": "cha",
   "isWIP": true,
   "levels": [
     {"lvl": 0,"bonus": 0,"free": ["-"]},

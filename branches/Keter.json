@@ -1,8 +1,8 @@
 {
   "id": "keter",
   "name": "Кетер",
-  "statName": "-",
-  "statKey": "-",
+  "statName": "Сила",
+  "statKey": "str",
   "isWIP": true,
   "levels": [
     {"lvl": 0,"bonus": 0,"free": ["-"]},

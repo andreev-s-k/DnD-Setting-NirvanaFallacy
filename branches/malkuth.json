@@ -1,26 +1,26 @@
 {
   "id": "malkuth",
   "name": "Малхут",
-  "statName": "-",
-  "statKey": "-",
+  "statName": "Харизма",
+  "statKey": "cha",
   "isWIP": true,
   "levels": [
-    {"lvl": 0,"bonus": 0,"free": ["-"]},
-    {"lvl": 1,"bonus": 1,"unlocks": ["-", "-"]},
+    {"lvl": 0,"bonus": 0,"free": ["releevskie"]},
+    {"lvl": 1,"bonus": 1,"unlocks": ["coronal", "tsunami"]},
     {"lvl": 2,"bonus": 1,"tierUnlock": 1},
-    {"lvl": 3,"bonus": 1,"unlocks": ["-"]},
+    {"lvl": 3,"bonus": 1,"unlocks": ["geomagnetic"]},
     {"lvl": 4,"bonus": 1,"tierUnlock": 2},
-    {"lvl": 5,"bonus": 1, "unlocks": ["-", "-"]},
+    {"lvl": 5,"bonus": 1, "unlocks": ["stratospheric", ""]},
     {"lvl": 6, "bonus": 1,"tierUnlock": 3 },
-    {"lvl": 7,"bonus": 1,"unlocks": ["-"]},
+    {"lvl": 7,"bonus": 1,"unlocks": ["catastrophe"]},
     {"lvl": 8,"bonus": 1, "tierUnlock": 4 },
-    {"lvl": 9,"bonus": 2, "reqStat": 20, "extraReaction": true, "free": ["-"]},
-    {"lvl": 10,"bonus": 2,"reqStat": 20,"unlocks": ["-"]}
+    {"lvl": 9,"bonus": 2, "reqStat": 20, "extraReaction": true, "free": ["lightning"]},
+    {"lvl": 10,"bonus": 2,"reqStat": 20,"unlocks": ["armageddon"]}
   ],
   "skills": [
     {
-      "id": "-",
-      "name": "-",
+      "id": "releevskie",
+      "name": "РЭЛЕЕВСКИЕ ВОЛНЫ",
       "freeLvl": 0,
       "action": "-",
       "tiers": [
@@ -37,8 +37,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "coronal",
+      "name": "КОРОНАЛЬНЫЙ РАЗРЯД",
       "unlockLvl": 1,
       "action": "-",
       "tiers": [
@@ -51,8 +51,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "tsunami",
+      "name": "МЕТЕО ЦУНАМИ",
       "unlockLvl": 1,
       "action": "-",
       "tiers": [
@@ -65,8 +65,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "geomagnetic",
+      "name": "ГЕОМАГНИТНАЯ БУРЯ",
       "unlockLvl": 3,
       "action": "-",
       "tiers": [
@@ -79,8 +79,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "stratospheric",
+      "name": "СТРАТОСФЕРНЫЙ УДАР",
       "unlockLvl": 5,
       "action": "-",
       "tiers": [
@@ -93,8 +93,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "adiabatic",
+      "name": "АДИАБАТИЧЕСКОЕ РАСШИРЕНИЕ",
       "unlockLvl": 5,
       "action": "-",
       "tiers": [
@@ -107,8 +107,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "catastrophe",
+      "name": "ТЕОРИЯ КАТАСТРОФ",
       "unlockLvl": 7,
       "action": "-",
       "tiers": [
@@ -121,8 +121,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "lightning",
+      "name": "ГРОМОВОЙ ФРОНТ",
       "freeLvl": 9,
       "action": "-",
       "tiers": [
@@ -135,8 +135,8 @@
       "wip": true
     },
     {
-      "id": "-",
-      "name": "-",
+      "id": "armageddon",
+      "name": "АРМАГЕДДОН",
       "unlockLvl": 10,
       "action": "-",
       "tiers": [

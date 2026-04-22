@@ -1,8 +1,8 @@
 {
   "id": "binah",
   "name": "Бина",
-  "statName": "-",
-  "statKey": "-",
+  "statName": "Интеллект",
+  "statKey": "int",
   "isWIP": true,
   "levels": [
     {"lvl": 0,"bonus": 0,"free": ["-"]},
